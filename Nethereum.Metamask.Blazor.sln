@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29411.138
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nethereum.Metamask.Blazor", "Nethereum.Metamask.Blazor\Nethereum.Metamask.Blazor.csproj", "{C23BBD11-7E79-42CC-AB7E-4EC8E444D442}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nethereum.Metamask.Blazor.Server", "Nethereum.Metamask.Blazor.Server\Nethereum.Metamask.Blazor.Server.csproj", "{E92B0C32-35B4-4808-9763-753FCC80876F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nethereum.Metamask.Blazor.Server", "Nethereum.Metamask.Blazor.Server\Nethereum.Metamask.Blazor.Server.csproj", "{E92B0C32-35B4-4808-9763-753FCC80876F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commerce.Metamask.Blazor.Server", "Commerce.Metamask.Blazor.Server\Commerce.Metamask.Blazor.Server.csproj", "{B71773AF-D187-4A58-B9CE-F9D6BC1C4748}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E92B0C32-35B4-4808-9763-753FCC80876F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E92B0C32-35B4-4808-9763-753FCC80876F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E92B0C32-35B4-4808-9763-753FCC80876F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B71773AF-D187-4A58-B9CE-F9D6BC1C4748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B71773AF-D187-4A58-B9CE-F9D6BC1C4748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B71773AF-D187-4A58-B9CE-F9D6BC1C4748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B71773AF-D187-4A58-B9CE-F9D6BC1C4748}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
