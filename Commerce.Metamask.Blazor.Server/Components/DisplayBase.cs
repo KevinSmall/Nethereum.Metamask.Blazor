@@ -5,6 +5,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Commerce.Metamask.Blazor.Server.Models;
+using Commerce.Metamask.Blazor.Server.Services;
 
 namespace Commerce.Metamask.Blazor.Server.Components
 {
@@ -15,13 +16,16 @@ namespace Commerce.Metamask.Blazor.Server.Components
 
         [Microsoft.AspNetCore.Components.Parameter]
         public string BuyerPoNumber { get; set; }
-                
+
         public PoModel PurchaseOrder { get; set; }
         public string AdditionalMessage { get; set; }
         public bool IsBusy { get; private set; }
 
         //[Inject]
         //public HttpClient Client { get; set; }
+
+        [Inject]
+        public IWalletBuyer WalletBuyer { get; set; }
 
         protected override void OnInitialized()
         {
@@ -34,6 +38,8 @@ namespace Commerce.Metamask.Blazor.Server.Components
             IsBusy = true;
             try
             {
+                AdditionalMessage = WalletBuyer.GetLatestBlockNumber().ToString();
+
                 //var web3 = new Web3(Settings.BlockchainUrl);
                 //var wbs = new WalletBuyerService(web3, Settings.WalletBuyerAddress);
 

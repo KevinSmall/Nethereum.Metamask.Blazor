@@ -28,16 +28,16 @@ namespace Commerce.Metamask.Blazor.Server.Components
 
         protected override void OnInitialized()
         {
-            //PoCreateModel = new PoCreateModel
-            //{
-            //    BuyerPurchaseOrderNumber = BuyerPoNumber,
-            //    SellerSysId = "SoylentCorporation",
-            //    BuyerProductId = "BHT-1101 this needs updated",
-            //    Currency = "DAI",
-            //    CurrencyAddress = "0x7bbd0d72e59ede7f2a65abde9539aa006682c741",
-            //    TotalQuantity = 4,
-            //    TotalValue = 10
-            //};
+            PoCreateModel = new PoCreateModel
+            {
+                BuyerPurchaseOrderNumber = BuyerPoNumber,
+                SellerSysId = "SoylentCorporation",
+                BuyerProductId = "BHT-1101 this needs updated",
+                Currency = "DAI",
+                CurrencyAddress = "0x7bbd0d72e59ede7f2a65abde9539aa006682c741",
+                TotalQuantity = 4,
+                TotalValue = 10
+            };
             AdditionalMessage = "none";
             base.OnInitialized();
         }

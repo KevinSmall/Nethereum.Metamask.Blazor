@@ -36,7 +36,7 @@ namespace Commerce.Metamask.Blazor.Server
 
             // Buyer UI Library            
             services.Configure<WalletBuyerConfig>(Configuration.GetSection("WalletBuyer"));
-            services.AddSingleton<IWalletBuyer, WalletBuyer>();
+            services.AddScoped<IWalletBuyer, WalletBuyer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
