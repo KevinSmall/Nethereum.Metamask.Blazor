@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Nethereum.JsonRpc.Client.RpcMessages;
 
-namespace Commerce.Metamask.Blazor
+namespace Commerce.Metamask.Blazor.Server.Services
 {
     public interface IMetamaskInterop
     {

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Commerce.Metamask.Blazor.Server.Services;
 
 namespace Commerce.Metamask.Blazor.Server
 {
@@ -28,9 +28,15 @@ namespace Commerce.Metamask.Blazor.Server
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            // Metamask
             services.AddScoped<IMetamaskInterop, MetamaskBlazorInterop>();
             services.AddScoped<MetamaskService>();
             services.AddScoped<MetamaskInterceptor>();
+
+            // Buyer UI Library            
+            services.Configure<WalletBuyerConfig>(Configuration.GetSection("WalletBuyer"));
+            services.AddSingleton<IWalletBuyer, WalletBuyer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 using Nethereum.JsonRpc.Client.RpcMessages;
 using Newtonsoft.Json;
 
-namespace Commerce.Metamask.Blazor
+namespace Commerce.Metamask.Blazor.Server.Services
 {
     public class MetamaskBlazorInterop : IMetamaskInterop
     {

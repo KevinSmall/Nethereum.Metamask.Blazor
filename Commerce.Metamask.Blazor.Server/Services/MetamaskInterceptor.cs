@@ -4,7 +4,7 @@ using Nethereum.JsonRpc.Client;
 using Nethereum.JsonRpc.Client.RpcMessages;
 using Nethereum.RPC.Eth.DTOs;
 
-namespace Commerce.Metamask.Blazor
+namespace Commerce.Metamask.Blazor.Server.Services
 {
     public class MetamaskInterceptor : RequestInterceptor
     {

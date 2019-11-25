@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Nethereum.Contracts.TransactionHandlers;
 
-namespace Commerce.Metamask.Blazor
+namespace Commerce.Metamask.Blazor.Server.Services
 {
     public class MetamaskService
     {

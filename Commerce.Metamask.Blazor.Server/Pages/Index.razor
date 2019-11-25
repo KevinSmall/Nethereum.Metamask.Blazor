@@ -3,6 +3,10 @@
 @inject MetamaskService metamaskService;
 @inject MetamaskInterceptor metamaskInterceptor;
 @inherits CommerceBuyerBase
+@using Microsoft.AspNetCore
+@using Commerce.Metamask.Blazor.Server.Components
+@using Commerce.Metamask.Blazor.Server.Models
+@using Commerce.Metamask.Blazor.Server.Services
 @using Microsoft.AspNetCore.Components
 @using Nethereum.Web3;
 @using Nethereum.Hex.HexTypes;
@@ -25,9 +29,9 @@ Selected Account: @SelectedAccount
 @TransactionHash
 @ErrorTransferMessage
 
-<br/>
-Kevtest
-<br/>
+<br />
+Buyer Wallet UI
+<br />
 <div class="form-group">
     <div class="form-row align-items-center">
         <div class="col-auto my-1">
