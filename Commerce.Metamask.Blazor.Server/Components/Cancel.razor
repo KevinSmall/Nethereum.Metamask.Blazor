@@ -1,0 +1,29 @@
+﻿@inherits CancelBase
+@using Microsoft.AspNetCore.Components
+
+<div class="card bg-light mb-3">
+    <div class="card-header">Cancel Existing PO</div>
+    <div class="card-body text-dark">
+        <p class="card-text">Send a cancellation request for an existing PO number.</p>
+        <div class="form-group">
+            @if (IsBusy)
+            {
+                <button class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                    Cancel PO
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-primary" type="button" @onclick="@CancelPo">
+                    Cancel PO
+                </button>
+            }
+        </div>
+    </div>
+</div>
+
+<TxReceipt Receipt="@ReceiptForCancelRequest"
+           BlockchainUrl="@Settings.BlockchainUrl"
+           AdditionalMessage="@AdditionalMessage">
+</TxReceipt>

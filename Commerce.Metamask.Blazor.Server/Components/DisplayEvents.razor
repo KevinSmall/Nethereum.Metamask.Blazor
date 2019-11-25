@@ -1,0 +1,77 @@
+﻿@inherits DisplayEventsBase
+@using Microsoft.AspNetCore.Components
+
+<div class="card bg-light mb-3">
+
+    <div class="card-header">Display PO Events</div>
+    <div class="card-body text-dark">
+
+        <form>
+            <div class="form-group row">
+                <label for="eventLog01" class="col-sm-3 col-form-label">Event Log 01</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" readonly id="eventLog01" @bind="@EventLog01" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="eventLog02" class="col-sm-3 col-form-label">Event Log 02</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" readonly id="eventLog02" @bind="@EventLog02" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="eventLog03" class="col-sm-3 col-form-label">Event Log 03</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" readonly id="eventLog03" @bind="@EventLog03" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="eventLog04" class="col-sm-3 col-form-label">Event Log 04</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" readonly id="eventLog04" @bind="@EventLog04" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="eventLog05" class="col-sm-3 col-form-label">Event Log 05</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" readonly id="eventLog03" @bind="@EventLog05" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="eventLog06" class="col-sm-3 col-form-label">Event Log 06</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" readonly id="eventLog03" @bind="@EventLog06" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="startBlock" class="col-sm-3 col-form-label">Start Block</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="startBlock" aria-describedby="startBlockHelp" placeholder="Enter a start block number" @bind="@StartBlock" />
+                    <small id="rpcUrlHelp" class="form-text text-muted">Search for events from this block number (defaults to application start block)</small>
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group">
+            @if (IsBusy)
+            {
+                <button class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                    Get Events
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-primary" type="button" @onclick="@GetEvents">
+                    Get Events
+                </button>
+            }
+        </div>
+        <p>@AdditionalMessage</p>
+    </div>
+</div>

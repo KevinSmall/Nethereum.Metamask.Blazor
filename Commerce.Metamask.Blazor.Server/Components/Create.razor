@@ -1,0 +1,70 @@
+﻿@inherits CreateBase
+@using Microsoft.AspNetCore.Components
+
+<div class="card bg-light mb-3">
+
+    <div class="card-header">Create New PO</div>
+    <div class="card-body text-dark">
+        <!-- TODO add validations to respect what is defined in the models -->
+        <form>
+            <div class="form-group row">
+                <label for="sellerSystemId" class="col-sm-3 col-form-label">Seller System ID</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="sellerSystemId" placeholder="Enter seller system id" @bind="@PoCreateModel.SellerSysId" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="buyerProductId" class="col-sm-3 col-form-label">Buyer Product ID</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="buyerProductId" placeholder="Enter buyer product id" @bind="@PoCreateModel.BuyerProductId" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="currencyKey" class="col-sm-3 col-form-label">Currency Key</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="currencyKey" placeholder="Enter currency key" @bind="@PoCreateModel.Currency" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="currencyAddress" class="col-sm-3 col-form-label">Currency Address</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="currencyAddress" placeholder="Enter currency token address" @bind="@PoCreateModel.CurrencyAddress" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="totalQuantity" class="col-sm-3 col-form-label">Total Quantity</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control" id="totalQuantity" placeholder="Enter total quantity" @bind="@PoCreateModel.TotalQuantity" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="totalValue" class="col-sm-3 col-form-label">Total Value</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control" id="totalValue" placeholder="Enter total value" @bind="@PoCreateModel.TotalValue" />
+                </div>
+            </div>
+        </form>
+
+        <div class="form-group">
+            @if (IsBusy)
+            {
+                <button class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                    Create PO
+                </button>
+            }
+            else
+            {
+                <button class="btn btn-primary" type="button" @onclick="@CreatePo">
+                    Create PO
+                </button>
+            }
+        </div>
+
+    </div>
+</div>
+
+<TxReceipt Receipt="@ReceiptForCreateRequest"
+           BlockchainUrl="@Settings.BlockchainUrl"
+           AdditionalMessage="@AdditionalMessage">
+</TxReceipt>

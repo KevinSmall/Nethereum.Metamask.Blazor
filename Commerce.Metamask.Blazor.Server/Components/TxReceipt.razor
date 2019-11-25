@@ -1,0 +1,39 @@
+﻿@inherits TxReceiptBase
+@using Microsoft.AspNetCore.Components
+
+<div class="card bg-light mb-3">
+    <div class="card-header">Transaction Receipt</div>
+    <div class="card-body text-dark">
+
+        <!-- Tx Hash -->
+        @if (String.IsNullOrWhiteSpace(TransactionReceiptHash))
+        {
+            <p class="card-text">Hash: none</p>
+        }
+        else
+        {
+            <p class="card-text">Hash: <a href="@TransactionReceiptLink">@TransactionReceiptHash</a></p>
+        }
+
+        <!-- Tx Block -->
+        <p class="card-text">Block: @TransactionBlockNumber</p>
+
+        <!-- Tx Status -->
+        @if (String.IsNullOrWhiteSpace(TransactionReceiptHash))
+        {
+            <p class="card-text">Status: none</p>
+        }
+        else
+        {
+            @if (IsTransactionError)
+            {
+                <p class="card-text">Status: <span class="text-danger">error</span></p>
+            }
+            else
+            {
+                <p class="card-text">Status: <span class="text-success">ok</span></p>
+            }
+        }
+        <p class="card-text">Message: @AdditionalMessage</p>
+    </div>
+</div>

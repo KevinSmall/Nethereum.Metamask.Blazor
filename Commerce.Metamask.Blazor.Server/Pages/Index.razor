@@ -2,9 +2,12 @@
 @inject IJSRuntime jsRuntime;
 @inject MetamaskService metamaskService;
 @inject MetamaskInterceptor metamaskInterceptor;
+@inherits CommerceBuyerBase
+@using Microsoft.AspNetCore.Components
 @using Nethereum.Web3;
 @using Nethereum.Hex.HexTypes;
-<br/>
+
+<br />
 Available Metamask : @MetamaskAvailable
 <br />
 Enabled Ethereum : @EthereumEnabled
@@ -21,6 +24,123 @@ Selected Account: @SelectedAccount
 <br />
 @TransactionHash
 @ErrorTransferMessage
+
+<br/>
+Kevtest
+<br/>
+<div class="form-group">
+    <div class="form-row align-items-center">
+        <div class="col-auto my-1">
+            <label for="poNumberInput">Purchase Order Number</label>
+        </div>
+        <div class="col-sm-6 my-1">
+            <input type="text" class="form-control" id="poNumberInput" aria-describedby="poNumberInputHelp" placeholder="Enter Purchase Order number" @bind="@BuyerPoNumber" />
+        </div>
+        <div class="col-auto my-1">
+            <button class="btn btn-primary" type="button" @onclick="@GeneratePoNumber">
+                Generate
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <button type="button" class="btn @GetActive(0)" @onclick="@(() => Select(0))">Display</button>
+            <button type="button" class="btn @GetActive(1)" @onclick="@(() => Select(1))">Display Events</button>
+            <button type="button" class="btn @GetActive(2)" @onclick="@(() => Select(2))">Create</button>
+            <button type="button" class="btn @GetActive(3)" @onclick="@(() => Select(3))">Cancel</button>
+            <button type="button" class="btn @GetActive(4)" @onclick="@(() => Select(4))">Settings</button>
+        </div>
+    </div>
+    <div class="card-body">
+        @if (ActiveTab == 0)
+        {
+            <!-- Display PO -->
+            <Display Settings="@Settings"
+                     BuyerPoNumber="@BuyerPoNumber">
+            </Display>
+        }
+        else if (ActiveTab == 1)
+        {
+            <!-- Display PO Events -->
+            <DisplayEvents Settings="@Settings"
+                           BuyerPoNumber="@BuyerPoNumber">
+            </DisplayEvents>
+        }
+        else if (ActiveTab == 2)
+        {
+            <!-- Create PO -->
+            <Create Settings="@Settings"
+                    BuyerPoNumber="@BuyerPoNumber">
+            </Create>
+        }
+        else if (ActiveTab == 3)
+        {
+            <!-- Cancel PO -->
+            <Cancel Settings="@Settings"
+                    BuyerPoNumber="@BuyerPoNumber">
+            </Cancel>
+        }
+        else if (ActiveTab == 4)
+        {
+            <!-- Settings -->
+            <div class="card bg-light mb-3">
+                <div class="card-header">Buyer Wallet</div>
+                <div class="card-body text-dark">
+
+                    <div class="form-group">
+                        <label for="url">Blockchain Url</label>
+                        <input type="text" class="form-control" id="urlInput" aria-describedby="rpcUrlHelp" placeholder="Enter blockchain URL e.g. https://rinkeby.infura.io/" @bind="@Settings.BlockchainUrl" />
+                        <small id="rpcUrlHelp" class="form-text text-muted">URL of blockchain to connect to</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="walletBuyerAddressInput">Buyer Wallet Address</label>
+                        <input type="text" class="form-control" id="walletBuyerAddressInput" aria-describedby="walletBuyerAddressHelp" placeholder="Enter the buyer wallet address" @bind="@Settings.WalletBuyerAddress" />
+                        <small id="walletBuyerAddressHelp" class="form-text text-muted">Contract address of the buyer wallet</small>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Settings for Posting Transactions -->
+            <div class="card bg-light mb-3">
+                <div class="card-header">For Posting Transactions</div>
+                <div class="card-body text-dark">
+
+                    <div class="form-group">
+                        <label for="walletBuyerAddressInput">Account with Ether</label>
+                        <input type="text" class="form-control" id="accountWithEther" aria-describedby="accountWithEtherHelp" placeholder="Enter account address" @bind="@Settings.AccountWithEther" />
+                        <small id="accountWithEtherHelp" class="form-text text-muted">Externally owned account that has Ether to make new tranactions</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tokenAddressInput">Private Key</label>
+                        <input type="text" class="form-control" id="accountWithEtherKey" aria-describedby="accountWithEtherKeyHelp" placeholder="Enter private key" @bind="@Settings.AccountWithEtherKey" />
+                        <small id="accountWithEtherKeyHelp" class="form-text text-muted">Private key of above account</small>
+                    </div>
+                </div>
+            </div>
+        }
+        <p>@AdditionalMessage</p>
+    </div>
+</div>
+
+@code{
+    int ActiveTab = 0;
+    protected void Select(int tab)
+    {
+        ActiveTab = tab;
+    }
+
+    protected string GetActive(int tab)
+    {
+        if (ActiveTab == tab) return "btn-primary";
+        return "btn-light";
+    }
+}
+
 @code{
 
     bool MetamaskAvailable { get; set; }
