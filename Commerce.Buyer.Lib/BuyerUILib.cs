@@ -18,7 +18,7 @@ namespace Commerce.Buyer.Lib
             Wallet = new Wallet(web3, walletBuyerAddress, log);
             IFieldMapper mapper = new FieldMapper();
             PurchaseOrder = new PurchaseOrder(Wallet, mapper, log);
-            EventLogs = new EventLogs(Wallet, mapper, log);
+            EventLogs = new EventLogs(Wallet, PurchaseOrder, mapper, log);
             _hasBeenInitialized = false;
         }
 

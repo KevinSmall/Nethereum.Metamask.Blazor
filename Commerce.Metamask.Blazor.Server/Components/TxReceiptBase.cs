@@ -6,6 +6,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Commerce.Metamask.Blazor.Server.Models;
+using Commerce.Metamask.Blazor.Server.Services;
 
 namespace Commerce.Metamask.Blazor.Server.Components
 {
@@ -25,8 +26,8 @@ namespace Commerce.Metamask.Blazor.Server.Components
         public ulong TransactionBlockNumber { get; private set; }
         public bool IsTransactionError { get; private set; }
 
-        //[Inject]
-        //public HttpClient Client { get; set; }
+        [Inject]
+        public IWalletBuyer WalletBuyer { get; set; }
 
         protected override void OnInitialized()
         {
@@ -35,8 +36,9 @@ namespace Commerce.Metamask.Blazor.Server.Components
 
         protected override void OnParametersSet()
         {
+            string blockchainName = this.WalletBuyer.Lib.Wallet.Info.BlockchainName;
             TransactionReceiptHash = Receipt?.TransactionHash;
-            TransactionReceiptLink = DeriveBaseUrl(BlockchainUrl) + TransactionReceiptHash;
+            TransactionReceiptLink = DeriveBaseUrl(blockchainName) + TransactionReceiptHash;
 
             if (Receipt != null && Receipt.BlockNumber != null)
             {
@@ -50,13 +52,14 @@ namespace Commerce.Metamask.Blazor.Server.Components
             base.OnParametersSet();
         }
 
-        private string DeriveBaseUrl(string blockchainUrl)
+        private string DeriveBaseUrl(string blockchainName)
         {
-            if (blockchainUrl.Contains("rinkeby"))
+            blockchainName = blockchainName.ToLower();
+            if (blockchainName.Contains("rinkeby"))
             {
                 return "https://rinkeby.etherscan.io/tx/";
             }
-            else if (blockchainUrl.Contains("ropsten"))
+            else if (blockchainName.Contains("ropsten"))
             {
                 return "https://ropsten.etherscan.io/tx/";
             }

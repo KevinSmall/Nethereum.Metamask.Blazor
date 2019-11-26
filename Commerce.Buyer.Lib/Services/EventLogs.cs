@@ -13,14 +13,30 @@ namespace Commerce.Buyer.Lib.Services
     public class EventLogs : IEventLogs
     {
         private IWallet _wallet;
+        private IPurchaseOrder _purchaseOrder;
         private ILog _log;
         private IFieldMapper _mapper;
 
-        public EventLogs(IWallet wallet, IFieldMapper mapper, ILog log)
+        public EventLogs(IWallet wallet, IPurchaseOrder purchaseOrder, IFieldMapper mapper, ILog log)
         {
             _wallet = wallet;
+            _purchaseOrder = purchaseOrder;
             _mapper = mapper;
             _log = log;
+        }
+
+        public async Task<EventLogModel[]> GetEventLogsForPoAsync(string buyerPoNumber, ulong startBlock = 0, ulong endBlock = 0)
+        {
+            EventLogModel[] elms = new EventLogModel[] { };
+            var po = await _purchaseOrder.GetPoAsync(buyerPoNumber);
+            if (po == null || (po != null && po.EthPurchaseOrderNumber == 0))
+            {
+                return elms;
+            }
+            else
+            {
+                return await GetEventLogsForPoAsync(po.EthPurchaseOrderNumber, startBlock, endBlock);
+            }
         }
 
         public async Task<EventLogModel[]> GetEventLogsForPoAsync(ulong ethPoNumber, ulong startBlock = 0, ulong endBlock = 0)
@@ -201,7 +217,7 @@ namespace Commerce.Buyer.Lib.Services
 
             return elmAll.ToArray();
         }
-        
+
         public async Task<EventLogModel[]> GetEventLogsForAllPosAsync(ulong startBlock, ulong endBlock)
         {
             // TODO could rewrite using Blockchain Processing instead
@@ -219,9 +235,9 @@ namespace Commerce.Buyer.Lib.Services
              */
             var address = _wallet.Info.WalletBuyerAddress;
             var startBlockP = new BlockParameter(startBlock);
-            var endBlockP= new BlockParameter(endBlock);
+            var endBlockP = new BlockParameter(endBlock);
             var web3 = _wallet.Web3;
-                    
+
             var eventHandler01 = web3.Eth.GetEvent<PurchaseRaisedOkLogEventDTO>(address);
             var filter01 = eventHandler01.CreateFilterInput(startBlockP, endBlockP);
             var logs01 = await eventHandler01.GetAllChanges(filter01);
