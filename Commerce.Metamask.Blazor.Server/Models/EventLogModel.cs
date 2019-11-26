@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Commerce.Buyer.Lib.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 

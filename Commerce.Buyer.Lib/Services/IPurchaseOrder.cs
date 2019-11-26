@@ -19,13 +19,13 @@ namespace Commerce.Buyer.Lib.Services
         /// Returns PO, or null if PO not found
         /// </summary>
         /// <param name="buyerPoNumber">Buyer system PO number</param>        
-        Task<PoModel> GetPo(string buyerPoNumber);
+        Task<PoModel> GetPoAsync(string buyerPoNumber);
 
         /// <summary>
         /// Returns PO, or null if PO not found
         /// </summary>
         /// <param name="ethPoNumber">Global Ethereum PO number</param>        
-        Task<PoModel> GetPo(ulong ethPoNumber);
+        Task<PoModel> GetPoAsync(ulong ethPoNumber);
 
         /// <summary>
         /// Request a PO be cancelled and wait for receipt. Throws if tx not possible (e.g. no Ether)

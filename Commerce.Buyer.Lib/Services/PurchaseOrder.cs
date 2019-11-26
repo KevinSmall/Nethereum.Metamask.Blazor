@@ -20,7 +20,7 @@ namespace Commerce.Buyer.Lib.Services
             _log = log;
         }
                 
-        public async Task<PoModel> GetPo(ulong ethPoNumber)
+        public async Task<PoModel> GetPoAsync(ulong ethPoNumber)
         {
             var po = (await _wallet.PoMainService.GetPoByEthPoNumberQueryAsync(ethPoNumber)
                 .ConfigureAwait(false)).Po;
@@ -34,7 +34,7 @@ namespace Commerce.Buyer.Lib.Services
             }
         }
        
-        public async Task<PoModel> GetPo(string buyerPoNumber)
+        public async Task<PoModel> GetPoAsync(string buyerPoNumber)
         {
             var buyerPoNumberAsBytes = ConversionUtils.ConvertStringToBytes32Array(buyerPoNumber);
             var po = (await _wallet.PoMainService.GetPoByBuyerPoNumberQueryAsync(_wallet.Info.BuyerSysIdAsBytes, buyerPoNumberAsBytes)
@@ -53,7 +53,7 @@ namespace Commerce.Buyer.Lib.Services
         {
             // Check PO exists
             TransactionReceipt receipt = null;
-            var po = await GetPo(ethPoNumber);
+            var po = await GetPoAsync(ethPoNumber);
             if (po == null)
             {
                 _log?.Warn($"EthPO {ethPoNumber} not found on blockchain");
@@ -78,7 +78,7 @@ namespace Commerce.Buyer.Lib.Services
         {
             // Check PO exists
             TransactionReceipt receipt = null;
-            var po = await GetPo(buyerPoNumber);
+            var po = await GetPoAsync(buyerPoNumber);
             if (po == null)
             {
                 _log?.Warn($"Buyer PO ({_wallet.Info.BuyerSysId}, {buyerPoNumber}) not found on blockchain");
@@ -94,7 +94,7 @@ namespace Commerce.Buyer.Lib.Services
         {
             // Check PO exists
             TransactionReceipt receipt = null;
-            var existingPo = await GetPo(poCreateModel.BuyerPurchaseOrderNumber);
+            var existingPo = await GetPoAsync(poCreateModel.BuyerPurchaseOrderNumber);
             if (existingPo == null)
             {
                 // Ok to create new PO

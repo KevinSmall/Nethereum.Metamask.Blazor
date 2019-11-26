@@ -6,7 +6,8 @@ namespace Commerce.Metamask.Blazor.Server.Services
     public interface IWalletBuyer
     {
         BuyerUILib Lib { get; }
-
-        Task<ulong> GetLatestBlockNumber();
+        bool IsInitialized { get; }
+        Task InitializeAsync();
+        Task<ulong> GetLatestBlockNumberAsync();
     }
 }

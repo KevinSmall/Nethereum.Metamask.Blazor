@@ -4,33 +4,66 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Commerce.Metamask.Blazor.Server.Models;
+using Commerce.Metamask.Blazor.Server.Services;
+using Microsoft.Extensions.Logging;
+using Commerce.Buyer.Lib.Services;
 
 namespace Commerce.Metamask.Blazor.Server
 {
     public class CommerceBuyerBase : ComponentBase
     {
+        public string DebugText01 { get; set; }
+        public string DebugText02 { get; set; }
+
         public SettingsModel Settings { get; set; }
         public string BuyerPoNumber { get; set; }
         public string AdditionalMessage { get; set; }
 
-        //[Inject]
-        //public HttpClient Client { get; set; }
+        [Inject]
+        public IWalletBuyer WalletBuyer { get; set; }
+
+        private int _renderCounter;
 
         protected override void OnInitialized()
         {
+            //TODO fix this
             Settings = new SettingsModel
             {
-                BlockchainUrl = "https://rinkeby.infura.io/v3/7238211010344719ad14a89db874158c",
-                WalletBuyerAddress = "0x3a61a411F11444768a6e8CCf9AE242180098bBF7",
-                BusinessPartnersContractAddress = string.Empty, // not defined until OnInitializedAsync()
-                AccountWithEther = "0x32A555F2328e85E489f9a5f03669DC820CE7EBe9",
-                AccountWithEtherKey = "517311d936323b28ca55379280d3b307d354f35ae35b214c6349e9828e809adc"
+                BlockchainUrl = "Not available",
+                WalletBuyerAddress = "Not available",
+                BusinessPartnersContractAddress = "Not available", // not defined until OnInitializedAsync()
+                AccountWithEther = "Not available",
+                AccountWithEtherKey = "Not available"
             };
 
             BuyerPoNumber = "PO_20191107171001691"; // PO created by blazor wallet
             //BuyerPoNumber = "PO_201910171603403952520"; // PO created by SAP wallet
-
+            AdditionalMessage = "start";
+            _renderCounter = 0;
             base.OnInitialized();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            _renderCounter++;
+
+            if (firstRender)
+            {
+                //DebugText01 = "CommerceBuyerBase OnAfterRenderAsync First";
+                if (!WalletBuyer.IsInitialized)
+                {
+                    await WalletBuyer.InitializeAsync();
+                }
+                string s = WalletBuyer.Lib.Wallet.Info.PoMainAddress;
+                //var blockn = await WalletBuyer.GetLatestBlockNumberAsync();
+                //AdditionalMessage = blockn.ToString();
+                DebugText01 = $"CommerceBuyerBase OnAfterRenderAsync FirstRender Wallet Buyer Initialized {s}";
+            }
+            else
+            {
+                DebugText02 = $"CommerceBuyerBase OnAfterRenderAsync More {_renderCounter}";
+            }
+            await base.OnAfterRenderAsync(firstRender);
         }
 
         protected override async Task OnInitializedAsync()

@@ -32,6 +32,16 @@ Selected Account: @SelectedAccount
 <br />
 Buyer Wallet UI
 <br />
+<br />
+00 @DebugText00
+<br />
+<br />
+01 @DebugText01
+<br />
+<br />
+02 @DebugText02
+<br />
+
 <div class="form-group">
     <div class="form-row align-items-center">
         <div class="col-auto my-1">
@@ -46,6 +56,7 @@ Buyer Wallet UI
             </button>
         </div>
     </div>
+    <p>@AdditionalMessage</p>
 </div>
 
 <div class="card">
@@ -127,7 +138,6 @@ Buyer Wallet UI
                 </div>
             </div>
         }
-        <p>@AdditionalMessage</p>
     </div>
 </div>
 
@@ -145,8 +155,9 @@ Buyer Wallet UI
     }
 }
 
-@code{
 
+@code{
+    string @DebugText00 { get; set; }
     bool MetamaskAvailable { get; set; }
     bool EthereumEnabled { get; set; }
     string SelectedAccount { get; set; }
@@ -156,7 +167,9 @@ Buyer Wallet UI
 
     protected override async Task OnAfterRenderAsync(bool firstTime)
     {
+        DebugText00 = "In Index.razor OnAfterRenderAsync";
         MetamaskAvailable = await metamaskService.CheckMetamaskAvailability();
+        await base.OnAfterRenderAsync(firstTime);
     }
 
     protected async Task EnableEthereumAsync()
@@ -178,13 +191,14 @@ Buyer Wallet UI
 
     protected async Task TransferEtherAsync()
     {
-        try {
+        try
+        {
             var web3 = new Nethereum.Web3.Web3();
             web3.Client.OverridingRequestInterceptor = metamaskInterceptor;
 
             TransactionHash = await web3.Eth.GetEtherTransferService().TransferEtherAsync("0x13f022d72158410433cbd66f5dd8bf6d2d129924", 0.001m);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             ErrorTransferMessage = ex.Message;
         }
