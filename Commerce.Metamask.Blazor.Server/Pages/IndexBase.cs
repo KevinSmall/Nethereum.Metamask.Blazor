@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Commerce.Metamask.Blazor.Server
 {
-    public class CommerceBuyerBase : ComponentBase
+    public class IndexBase : ComponentBase
     {
         public string BuyerPoNumber { get; set; }
         public string AdditionalMessage { get; set; }
