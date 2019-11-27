@@ -1,12 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Commerce.Metamask.Blazor.Server.Services;
+using Microsoft.AspNetCore.Components;
 using Nethereum.RPC.Eth.DTOs;
-using Nethereum.Web3;
-using Nethereum.Web3.Accounts;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Commerce.Metamask.Blazor.Server.Models;
-using Commerce.Metamask.Blazor.Server.Services;
 
 namespace Commerce.Metamask.Blazor.Server.Components
 {
@@ -14,9 +8,6 @@ namespace Commerce.Metamask.Blazor.Server.Components
     {
         [Microsoft.AspNetCore.Components.Parameter]
         public TransactionReceipt Receipt { get; set; }
-
-        [Microsoft.AspNetCore.Components.Parameter]
-        public string BlockchainUrl { get; set; }
 
         [Microsoft.AspNetCore.Components.Parameter]
         public string AdditionalMessage { get; set; }
@@ -44,7 +35,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
             {
                 TransactionBlockNumber = (ulong)Receipt.BlockNumber.Value;
             }
-            
+
             IsTransactionError = false;
             if (Receipt != null && Receipt.Status.Value == 0)
                 IsTransactionError = true;
@@ -54,6 +45,8 @@ namespace Commerce.Metamask.Blazor.Server.Components
 
         private string DeriveBaseUrl(string blockchainName)
         {
+            if (blockchainName == null) return string.Empty;
+
             blockchainName = blockchainName.ToLower();
             if (blockchainName.Contains("rinkeby"))
             {

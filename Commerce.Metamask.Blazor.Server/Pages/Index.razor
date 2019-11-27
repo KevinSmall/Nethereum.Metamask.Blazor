@@ -49,29 +49,25 @@
         @if (ActiveTab == 0)
         {
             <!-- Display PO -->
-            <Display Settings="@Settings"
-                     BuyerPoNumber="@BuyerPoNumber">
+            <Display BuyerPoNumber="@BuyerPoNumber">
             </Display>
         }
         else if (ActiveTab == 1)
         {
             <!-- Display PO Events -->
-            <DisplayEvents Settings="@Settings"
-                           BuyerPoNumber="@BuyerPoNumber">
+            <DisplayEvents BuyerPoNumber="@BuyerPoNumber">
             </DisplayEvents>
         }
         else if (ActiveTab == 2)
         {
             <!-- Create PO -->
-            <Create Settings="@Settings"
-                    BuyerPoNumber="@BuyerPoNumber">
+            <Create BuyerPoNumber="@BuyerPoNumber">
             </Create>
         }
         else if (ActiveTab == 3)
         {
             <!-- Cancel PO -->
-            <Cancel Settings="@Settings"
-                    BuyerPoNumber="@BuyerPoNumber">
+            <Cancel BuyerPoNumber="@BuyerPoNumber">
             </Cancel>
         }
         else if (ActiveTab == 4)
@@ -113,19 +109,19 @@
 
                     <div class="form-group">
                         <label for="url">Blockchain Name</label>
-                        <input type="text" class="form-control" readonly id="blockchainName" aria-describedby="blockchainNameHelp" placeholder="None" @bind="@Settings.BlockchainUrl" />
+                        <input type="text" class="form-control" readonly id="blockchainName" aria-describedby="blockchainNameHelp" placeholder="None" /> <!--@bind="@Settings.BlockchainUrl" /> -->
                         <small id="blockchainNameHelp" class="form-text text-muted">Name of blockchain currently connected to</small>
                     </div>
 
                     <div class="form-group">
                         <label for="walletBuyerAddressInput">Buyer Wallet Address</label>
-                        <input type="text" class="form-control" readonly id="walletBuyerAddressInput" aria-describedby="walletBuyerAddressHelp" placeholder="Enter the buyer wallet address" @bind="@Settings.WalletBuyerAddress" />
+                        <input type="text" class="form-control" readonly id="walletBuyerAddressInput" aria-describedby="walletBuyerAddressHelp" placeholder="Enter the buyer wallet address" /><!-- @bind="@Settings.WalletBuyerAddress" />-->
                         <small id="walletBuyerAddressHelp" class="form-text text-muted">Contract address of the buyer wallet</small>
                     </div>
 
                     <div class="form-group">
                         <label for="walletBuyerSystemId">Buyer System Id</label>
-                        <input type="text" class="form-control" readonly id="walletBuyerSystemId" aria-describedby="walletBuyerSystemIdHelp" placeholder="None" @bind="@Settings.WalletBuyerAddress" />
+                        <input type="text" class="form-control" readonly id="walletBuyerSystemId" aria-describedby="walletBuyerSystemIdHelp" placeholder="None" /> <!--@bind="@Settings.WalletBuyerAddress" />-->
                         <small id="walletBuyerSystemIdHelp" class="form-text text-muted">System id description of the buyer wallet</small>
                     </div>
 

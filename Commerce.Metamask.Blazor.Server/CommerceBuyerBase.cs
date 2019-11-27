@@ -3,7 +3,6 @@ using Nethereum.Web3;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Commerce.Metamask.Blazor.Server.Models;
 using Commerce.Metamask.Blazor.Server.Services;
 using Microsoft.Extensions.Logging;
 using Commerce.Buyer.Lib.Services;
@@ -14,8 +13,7 @@ namespace Commerce.Metamask.Blazor.Server
     {
         public string DebugText01 { get; set; }
         public string DebugText02 { get; set; }
-
-        public SettingsModel Settings { get; set; }
+                
         public string BuyerPoNumber { get; set; }
         public string AdditionalMessage { get; set; }
 
@@ -26,14 +24,6 @@ namespace Commerce.Metamask.Blazor.Server
 
         protected override void OnInitialized()
         {
-            //TODO fix this
-            Settings = new SettingsModel
-            {
-                BlockchainUrl = "Not available",
-                WalletBuyerAddress = "Not available",
-                BusinessPartnersContractAddress = "Not available", // not defined until OnInitializedAsync()
-            };
-
             BuyerPoNumber = "PO_20191107171001691"; // PO created by blazor wallet
             //BuyerPoNumber = "PO_201910171603403952520"; // PO created by SAP wallet
             AdditionalMessage = string.Empty;

@@ -1,22 +1,14 @@
-﻿using Microsoft.AspNetCore.Components;
-using Nethereum.RPC.Eth.DTOs;
-using Nethereum.Web3;
-using Nethereum.Web3.Accounts;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Commerce.Metamask.Blazor.Server.Models;
+﻿using Commerce.Buyer.Lib.Models;
 using Commerce.Metamask.Blazor.Server.Services;
-using Commerce.Buyer.Lib.Models;
+using Microsoft.AspNetCore.Components;
+using Nethereum.RPC.Eth.DTOs;
+using System;
+using System.Threading.Tasks;
 
 namespace Commerce.Metamask.Blazor.Server.Components
 {
     public class CreateBase : ComponentBase
     {
-        [Microsoft.AspNetCore.Components.Parameter]
-        public SettingsModel Settings { get; set; }
-
         [Microsoft.AspNetCore.Components.Parameter]
         public string BuyerPoNumber { get; set; }
 

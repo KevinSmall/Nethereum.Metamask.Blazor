@@ -1,5 +1,4 @@
 ﻿using Commerce.Buyer.Lib.Models;
-using Commerce.Metamask.Blazor.Server.Models;
 using Commerce.Metamask.Blazor.Server.Services;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -10,9 +9,6 @@ namespace Commerce.Metamask.Blazor.Server.Components
 {
     public class DisplayEventsBase : ComponentBase
     {
-        [Microsoft.AspNetCore.Components.Parameter]
-        public SettingsModel Settings { get; set; }
-
         [Microsoft.AspNetCore.Components.Parameter]
         public string BuyerPoNumber { get; set; }
 
@@ -56,7 +52,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
                 // Main event reading
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
-                var logs = await WalletBuyer.Lib.EventLogs.GetEventLogsForPoAsync(BuyerPoNumber);
+                var logs = await WalletBuyer.Lib.EventLogs.GetEventLogsForPoAsync(BuyerPoNumber, StartBlock);
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
 

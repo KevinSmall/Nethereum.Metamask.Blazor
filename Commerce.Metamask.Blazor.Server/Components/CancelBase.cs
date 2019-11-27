@@ -1,5 +1,4 @@
-﻿using Commerce.Metamask.Blazor.Server.Models;
-using Commerce.Metamask.Blazor.Server.Services;
+﻿using Commerce.Metamask.Blazor.Server.Services;
 using Microsoft.AspNetCore.Components;
 using Nethereum.RPC.Eth.DTOs;
 using System;
@@ -9,9 +8,6 @@ namespace Commerce.Metamask.Blazor.Server.Components
 {
     public class CancelBase : ComponentBase
     {
-        [Microsoft.AspNetCore.Components.Parameter]
-        public SettingsModel Settings { get; set; }
-
         [Microsoft.AspNetCore.Components.Parameter]
         public string BuyerPoNumber { get; set; }
 
