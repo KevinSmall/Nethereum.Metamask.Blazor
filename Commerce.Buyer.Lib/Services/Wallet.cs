@@ -32,14 +32,14 @@ namespace Commerce.Buyer.Lib.Services
             _walletBuyerAddress = walletBuyerAddress;
             _log = log;
             BuyerService = new WalletBuyerService(Web3, _walletBuyerAddress);
+
+            Info = new WalletModel();
         }
 
         public async Task InitializeAsync()
         {
             if (!_hasBeenInitialized)
             {
-                Info = new WalletModel();
-
                 // Chain
                 var chainId = (ulong)(await Web3.Eth.ChainId.SendRequestAsync()).Value;
                 Info.BlockchainName = Enum.GetName(typeof(Nethereum.Signer.Chain), chainId);

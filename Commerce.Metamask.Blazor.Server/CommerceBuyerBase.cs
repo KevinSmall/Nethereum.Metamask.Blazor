@@ -1,19 +1,12 @@
-﻿using Microsoft.AspNetCore.Components;
-using Nethereum.Web3;
+﻿using Commerce.Metamask.Blazor.Server.Services;
+using Microsoft.AspNetCore.Components;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Commerce.Metamask.Blazor.Server.Services;
-using Microsoft.Extensions.Logging;
-using Commerce.Buyer.Lib.Services;
 
 namespace Commerce.Metamask.Blazor.Server
 {
     public class CommerceBuyerBase : ComponentBase
     {
-        public string DebugText01 { get; set; }
-        public string DebugText02 { get; set; }
-                
         public string BuyerPoNumber { get; set; }
         public string AdditionalMessage { get; set; }
 
@@ -37,19 +30,10 @@ namespace Commerce.Metamask.Blazor.Server
 
             if (firstRender)
             {
-                //DebugText01 = "CommerceBuyerBase OnAfterRenderAsync First";
                 if (!WalletBuyer.IsInitialized)
                 {
                     await WalletBuyer.InitializeAsync();
-                }
-                string s = WalletBuyer.Lib.Wallet.Info.PoMainAddress;
-                //var blockn = await WalletBuyer.GetLatestBlockNumberAsync();
-                //AdditionalMessage = blockn.ToString();
-                DebugText01 = $"CommerceBuyerBase OnAfterRenderAsync FirstRender Wallet Buyer Initialized {s}";
-            }
-            else
-            {
-                DebugText02 = $"CommerceBuyerBase OnAfterRenderAsync More {_renderCounter}";
+                }             
             }
             await base.OnAfterRenderAsync(firstRender);
         }
@@ -58,15 +42,7 @@ namespace Commerce.Metamask.Blazor.Server
         {
             try
             {
-                //    // Get the business partner storage address from PO main 
-                //    var web3 = new Web3(Settings.BlockchainUrl);
-                //    var wbs = new WalletBuyerService(web3, Settings.WalletBuyerAddress);
-                //    var poMainAddress = await wbs.PoMainQueryAsync();
-                //    var poms = new PoMainService(web3, poMainAddress);
-                //    Settings.BusinessPartnersContractAddress = await poms.BusinessPartnerStorageQueryAsync();
-
-                //    // Get block number that was valid at app startup            
-                //    Settings.BlockNumberValidAtAppStartup = (ulong)(await web3.Eth.Blocks.GetBlockNumber.SendRequestAsync()).Value;
+                // Init moved to OnAfterRenderAsync so that JavaScript interop works for Metamask service
             }
             catch (Exception ex)
             {
