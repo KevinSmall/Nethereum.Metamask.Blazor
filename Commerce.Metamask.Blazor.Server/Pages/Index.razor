@@ -5,34 +5,10 @@
 @inherits CommerceBuyerBase
 @using Microsoft.AspNetCore
 @using Commerce.Metamask.Blazor.Server.Components
-@using Commerce.Metamask.Blazor.Server.Models
 @using Commerce.Metamask.Blazor.Server.Services
 @using Microsoft.AspNetCore.Components
-@using Nethereum.Web3;
-@using Nethereum.Hex.HexTypes;
 
-<br />
-Available Metamask : @MetamaskAvailable
-<br />
-Enabled Ethereum : @EthereumEnabled
-<br />
-Selected Account: @SelectedAccount
-<br />
-<button @onclick="@EnableEthereumAsync">Enable Ethereum</button>
-<br />
-<button @onclick="@GetBlockHashAsync">Get BlockHash</button>
-<br />
-@BlockHash
-<br />
-<button @onclick="@TransferEtherAsync">Transfer Ether</button>
-<br />
-@TransactionHash
-@ErrorTransferMessage
-
-<br />
-Buyer Wallet UI
-<br />
-<br />
+<!--<br />
 00 @DebugText00
 <br />
 <br />
@@ -40,7 +16,7 @@ Buyer Wallet UI
 <br />
 <br />
 02 @DebugText02
-<br />
+<br />-->
 
 <div class="form-group">
     <div class="form-row align-items-center">
@@ -100,41 +76,59 @@ Buyer Wallet UI
         }
         else if (ActiveTab == 4)
         {
+            <div class="card bg-light mb-3">
+                <div class="card-header">Metamask Settings</div>
+                <div class="card-body text-dark">
+                    @if (MetamaskAvailable)
+                    {
+                        <p class="card-text">Metamask: <span class="badge badge-success">Available</span></p>
+                    }
+                    else
+                    {
+                        <p class="card-text">Metamask: <span class="badge badge-danger">Not Available</span></p>
+                    }
+                    @if (EthereumEnabled)
+                    {
+                        <p class="card-text">Ethereum: <span class="badge badge-success">Enabled</span></p>
+                    }
+                    else
+                    {
+                        <p class="card-text">Ethereum: <span class="badge badge-danger">Not enabled</span></p>
+                    }
+                    <button @onclick="@EnableEthereumAsync">Enable Ethereum</button>
+                    <br />
+                    <br />
+                    <div class="form-group">
+                        <label for="selectedAccountMetamask">Selected Account</label>
+                        <input type="text" class="form-control" readonly id="selectedAccountMetamask" aria-describedby="selectedAccountMetamaskHelp" placeholder="Enable Ethereum to select an account from MetaMask" @bind="@SelectedAccount" />
+                        <small id="selectedAccountMetamaskHelp" class="form-text text-muted">This account used to pay for any transactions made. It is selected within MetaMask.</small>
+                    </div>
+                </div>
+            </div>
+
             <!-- Settings -->
             <div class="card bg-light mb-3">
                 <div class="card-header">Buyer Wallet</div>
                 <div class="card-body text-dark">
 
                     <div class="form-group">
-                        <label for="url">Blockchain Url</label>
-                        <input type="text" class="form-control" id="urlInput" aria-describedby="rpcUrlHelp" placeholder="Enter blockchain URL e.g. https://rinkeby.infura.io/" @bind="@Settings.BlockchainUrl" />
-                        <small id="rpcUrlHelp" class="form-text text-muted">URL of blockchain to connect to</small>
+                        <label for="url">Blockchain Name</label>
+                        <input type="text" class="form-control" readonly id="blockchainName" aria-describedby="blockchainNameHelp" placeholder="None" @bind="@Settings.BlockchainUrl" />
+                        <small id="blockchainNameHelp" class="form-text text-muted">Name of blockchain currently connected to</small>
                     </div>
 
                     <div class="form-group">
                         <label for="walletBuyerAddressInput">Buyer Wallet Address</label>
-                        <input type="text" class="form-control" id="walletBuyerAddressInput" aria-describedby="walletBuyerAddressHelp" placeholder="Enter the buyer wallet address" @bind="@Settings.WalletBuyerAddress" />
+                        <input type="text" class="form-control" readonly id="walletBuyerAddressInput" aria-describedby="walletBuyerAddressHelp" placeholder="Enter the buyer wallet address" @bind="@Settings.WalletBuyerAddress" />
                         <small id="walletBuyerAddressHelp" class="form-text text-muted">Contract address of the buyer wallet</small>
                     </div>
 
-                </div>
-            </div>
-            <!-- Settings for Posting Transactions -->
-            <div class="card bg-light mb-3">
-                <div class="card-header">For Posting Transactions</div>
-                <div class="card-body text-dark">
-
                     <div class="form-group">
-                        <label for="walletBuyerAddressInput">Account with Ether</label>
-                        <input type="text" class="form-control" id="accountWithEther" aria-describedby="accountWithEtherHelp" placeholder="Enter account address" @bind="@Settings.AccountWithEther" />
-                        <small id="accountWithEtherHelp" class="form-text text-muted">Externally owned account that has Ether to make new tranactions</small>
+                        <label for="walletBuyerSystemId">Buyer System Id</label>
+                        <input type="text" class="form-control" readonly id="walletBuyerSystemId" aria-describedby="walletBuyerSystemIdHelp" placeholder="None" @bind="@Settings.WalletBuyerAddress" />
+                        <small id="walletBuyerSystemIdHelp" class="form-text text-muted">System id description of the buyer wallet</small>
                     </div>
 
-                    <div class="form-group">
-                        <label for="tokenAddressInput">Private Key</label>
-                        <input type="text" class="form-control" id="accountWithEtherKey" aria-describedby="accountWithEtherKeyHelp" placeholder="Enter private key" @bind="@Settings.AccountWithEtherKey" />
-                        <small id="accountWithEtherKeyHelp" class="form-text text-muted">Private key of above account</small>
-                    </div>
                 </div>
             </div>
         }
@@ -178,29 +172,6 @@ Buyer Wallet UI
         if (EthereumEnabled)
         {
             SelectedAccount = await metamaskService.GetSelectedAccount();
-        }
-    }
-
-    protected async Task GetBlockHashAsync()
-    {
-        var web3 = new Nethereum.Web3.Web3();
-        web3.Client.OverridingRequestInterceptor = metamaskInterceptor;
-        var block = await web3.Eth.Blocks.GetBlockWithTransactionsByNumber.SendRequestAsync(new HexBigInteger(1));
-        BlockHash = block.BlockHash;
-    }
-
-    protected async Task TransferEtherAsync()
-    {
-        try
-        {
-            var web3 = new Nethereum.Web3.Web3();
-            web3.Client.OverridingRequestInterceptor = metamaskInterceptor;
-
-            TransactionHash = await web3.Eth.GetEtherTransferService().TransferEtherAsync("0x13f022d72158410433cbd66f5dd8bf6d2d129924", 0.001m);
-        }
-        catch (Exception ex)
-        {
-            ErrorTransferMessage = ex.Message;
         }
     }
 }

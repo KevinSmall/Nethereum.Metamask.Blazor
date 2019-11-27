@@ -32,13 +32,11 @@ namespace Commerce.Metamask.Blazor.Server
                 BlockchainUrl = "Not available",
                 WalletBuyerAddress = "Not available",
                 BusinessPartnersContractAddress = "Not available", // not defined until OnInitializedAsync()
-                AccountWithEther = "Not available",
-                AccountWithEtherKey = "Not available"
             };
 
             BuyerPoNumber = "PO_20191107171001691"; // PO created by blazor wallet
             //BuyerPoNumber = "PO_201910171603403952520"; // PO created by SAP wallet
-            AdditionalMessage = "start";
+            AdditionalMessage = string.Empty;
             _renderCounter = 0;
             base.OnInitialized();
         }

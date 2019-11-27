@@ -6,9 +6,6 @@ namespace Commerce.Metamask.Blazor.Server.Models
     {
         public string BlockchainUrl { get; set; }
         public string WalletBuyerAddress { get; set; }
-        public string BusinessPartnersContractAddress { get; set; }
-        public string AccountWithEther { get; set; }
-        public string AccountWithEtherKey { get; set; }
-        public ulong BlockNumberValidAtAppStartup { get; set; }
+        public string BusinessPartnersContractAddress { get; set; }        
     }
 }

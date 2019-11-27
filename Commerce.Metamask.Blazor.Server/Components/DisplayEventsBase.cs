@@ -33,7 +33,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
         protected override void OnInitialized()
         {
             ClearEventLogs();
-            StartBlock = Settings.BlockNumberValidAtAppStartup;
+            StartBlock = 0;
             base.OnInitialized();
         }
 
@@ -59,6 +59,9 @@ namespace Commerce.Metamask.Blazor.Server.Components
                 var logs = await WalletBuyer.Lib.EventLogs.GetEventLogsForPoAsync(BuyerPoNumber);
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
+
+                var currentblockHex = await WalletBuyer.Lib.Wallet.Web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
+                ulong currentBlock = (ulong)(currentblockHex.Value);
 
                 if (logs.Length == 0)
                 {
@@ -95,7 +98,8 @@ namespace Commerce.Metamask.Blazor.Server.Components
                         EventLog06 = "more events not shown (adjust start block to see subset)";
                     }
                 }
-                AdditionalMessage = $"Read blocks {StartBlock} to current block and found {logs.Length} events in {ts.TotalSeconds} seconds";
+                ulong blockCount = currentBlock - StartBlock;
+                AdditionalMessage = $"Searched {blockCount} blocks from {StartBlock} to {currentBlock} and found {logs.Length} events in {ts.TotalSeconds} seconds";
 
             }
             catch (Exception ex)
