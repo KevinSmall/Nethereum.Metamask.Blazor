@@ -1,22 +1,22 @@
-﻿using Commerce.Buyer.Lib.Models;
-using Commerce.Metamask.Blazor.Server.Services;
+﻿using Commerce.Buyer.Lib;
+using Commerce.Buyer.Lib.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
-namespace Commerce.Metamask.Blazor.Server.Components
+namespace Commerce.Buyer.PoBlazorComponents
 {
     public class DisplayBase : ComponentBase
     {
+        [Microsoft.AspNetCore.Components.Parameter]
+        public IBuyerUILib BuyerUILib { get; set; }
+
         [Microsoft.AspNetCore.Components.Parameter]
         public string BuyerPoNumber { get; set; }
 
         public PoModel PurchaseOrder { get; set; }
         public string AdditionalMessage { get; set; }
         public bool IsBusy { get; private set; }
-
-        [Inject]
-        public IWalletBuyer WalletBuyer { get; set; }
 
         protected override void OnInitialized()
         {
@@ -29,7 +29,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
             IsBusy = true;
             try
             {
-                var po = await WalletBuyer.Lib.PurchaseOrder.GetPoAsync(BuyerPoNumber).ConfigureAwait(false);
+                var po = await BuyerUILib.PurchaseOrder.GetPoAsync(BuyerPoNumber).ConfigureAwait(false);
                 if (po != null && po.EthPurchaseOrderNumber != 0)
                 {
                     // PO exists    

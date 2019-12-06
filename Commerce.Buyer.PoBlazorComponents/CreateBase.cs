@@ -1,14 +1,17 @@
-﻿using Commerce.Buyer.Lib.Models;
-using Commerce.Metamask.Blazor.Server.Services;
+﻿using Commerce.Buyer.Lib;
+using Commerce.Buyer.Lib.Models;
 using Microsoft.AspNetCore.Components;
 using Nethereum.RPC.Eth.DTOs;
 using System;
 using System.Threading.Tasks;
 
-namespace Commerce.Metamask.Blazor.Server.Components
+namespace Commerce.Buyer.PoBlazorComponents
 {
     public class CreateBase : ComponentBase
     {
+        [Microsoft.AspNetCore.Components.Parameter]
+        public IBuyerUILib BuyerUILib { get; set; }
+
         [Microsoft.AspNetCore.Components.Parameter]
         public string BuyerPoNumber { get; set; }
 
@@ -16,10 +19,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
         public TransactionReceipt ReceiptForCreateRequest { get; set; }
         public string AdditionalMessage { get; set; }
         public bool IsBusy { get; private set; }
-
-        [Inject]
-        public IWalletBuyer WalletBuyer { get; set; }
-
+                
         protected override void OnInitialized()
         {
             PoCreateModel = new PoCreateModel
@@ -44,7 +44,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
             try
             {
                 // Check PO number is new
-                var po = await WalletBuyer.Lib.PurchaseOrder.GetPoAsync(BuyerPoNumber).ConfigureAwait(false);
+                var po = await BuyerUILib.PurchaseOrder.GetPoAsync(BuyerPoNumber).ConfigureAwait(false);
                 if (po != null && po.EthPurchaseOrderNumber != 0)
                 {
                     // PO already exists    
@@ -55,7 +55,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
                     // Create new PO
                     PoCreateModel.BuyerPurchaseOrderNumber = BuyerPoNumber; // refresh model value from parent value
                     AdditionalMessage = $"Creation request being sent for Buyer PO {PoCreateModel.BuyerPurchaseOrderNumber}";
-                    ReceiptForCreateRequest = await WalletBuyer.Lib.PurchaseOrder.CreatePoAndWaitForReceiptAsync(PoCreateModel).ConfigureAwait(false);
+                    ReceiptForCreateRequest = await BuyerUILib.PurchaseOrder.CreatePoAndWaitForReceiptAsync(PoCreateModel).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)

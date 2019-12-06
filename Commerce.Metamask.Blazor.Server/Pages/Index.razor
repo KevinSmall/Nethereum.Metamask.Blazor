@@ -4,13 +4,9 @@
 @inject MetamaskInterceptor metamaskInterceptor;
 @inherits IndexBase
 @using Microsoft.AspNetCore
-@using Commerce.Metamask.Blazor.Server.Components
 @using Commerce.Metamask.Blazor.Server.Services
 @using Microsoft.AspNetCore.Components
 @using Commerce.Buyer.PoBlazorComponents
-
-<MyComponent1 BuyerUILib="@WalletBuyer.Lib">
-</MyComponent1>
 
 <div class="form-group">
     <div class="form-row align-items-center">
@@ -43,25 +39,29 @@
         @if (ActiveTab == 0)
         {
             <!-- Display PO -->
-            <Display BuyerPoNumber="@BuyerPoNumber">
+            <Display BuyerUILib="@WalletBuyer.Lib"
+                     BuyerPoNumber="@BuyerPoNumber">
             </Display>
         }
         else if (ActiveTab == 1)
         {
             <!-- Display PO Events -->
-            <DisplayEvents BuyerPoNumber="@BuyerPoNumber">
+            <DisplayEvents BuyerUILib="@WalletBuyer.Lib"
+                           BuyerPoNumber="@BuyerPoNumber">
             </DisplayEvents>
         }
         else if (ActiveTab == 2)
         {
             <!-- Create PO -->
-            <Create BuyerPoNumber="@BuyerPoNumber">
+            <Create BuyerUILib="@WalletBuyer.Lib"
+                    BuyerPoNumber="@BuyerPoNumber">
             </Create>
         }
         else if (ActiveTab == 3)
         {
             <!-- Cancel PO -->
-            <Cancel BuyerPoNumber="@BuyerPoNumber">
+            <Cancel BuyerUILib="@WalletBuyer.Lib"
+                    BuyerPoNumber="@BuyerPoNumber">
             </Cancel>
         }
         else if (ActiveTab == 4)

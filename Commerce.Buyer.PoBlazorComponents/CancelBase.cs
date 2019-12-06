@@ -1,22 +1,22 @@
-﻿using Commerce.Metamask.Blazor.Server.Services;
+﻿using Commerce.Buyer.Lib;
 using Microsoft.AspNetCore.Components;
 using Nethereum.RPC.Eth.DTOs;
 using System;
 using System.Threading.Tasks;
 
-namespace Commerce.Metamask.Blazor.Server.Components
+namespace Commerce.Buyer.PoBlazorComponents
 {
     public class CancelBase : ComponentBase
     {
+        [Microsoft.AspNetCore.Components.Parameter]
+        public IBuyerUILib BuyerUILib { get; set; }
+
         [Microsoft.AspNetCore.Components.Parameter]
         public string BuyerPoNumber { get; set; }
 
         public TransactionReceipt ReceiptForCancelRequest { get; private set; }
         public string AdditionalMessage { get; private set; }
         public bool IsBusy { get; private set; }
-
-        [Inject]
-        public IWalletBuyer WalletBuyer { get; set; }
 
         protected override void OnInitialized()
         {
@@ -31,7 +31,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
             {
                 // Send cancellation request
                 AdditionalMessage = $"Cancellation request is being sent for Buyer PO {BuyerPoNumber}";
-                ReceiptForCancelRequest = await WalletBuyer.Lib.PurchaseOrder.RequestPoCancelAndWaitForReceiptAsync(BuyerPoNumber);
+                ReceiptForCancelRequest = await BuyerUILib.PurchaseOrder.RequestPoCancelAndWaitForReceiptAsync(BuyerPoNumber);
             }
             catch (Exception ex)
             {

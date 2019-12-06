@@ -1,14 +1,17 @@
-﻿using Commerce.Buyer.Lib.Models;
-using Commerce.Metamask.Blazor.Server.Services;
+﻿using Commerce.Buyer.Lib;
+using Commerce.Buyer.Lib.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Commerce.Metamask.Blazor.Server.Components
+namespace Commerce.Buyer.PoBlazorComponents
 {
     public class DisplayEventsBase : ComponentBase
     {
+        [Microsoft.AspNetCore.Components.Parameter]
+        public IBuyerUILib BuyerUILib { get; set; }
+
         [Microsoft.AspNetCore.Components.Parameter]
         public string BuyerPoNumber { get; set; }
 
@@ -22,10 +25,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
 
         public string AdditionalMessage { get; set; }
         public bool IsBusy { get; private set; }
-
-        [Inject]
-        public IWalletBuyer WalletBuyer { get; set; }
-
+                
         protected override void OnInitialized()
         {
             ClearEventLogs();
@@ -52,11 +52,11 @@ namespace Commerce.Metamask.Blazor.Server.Components
                 // Main event reading
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
-                var logs = await WalletBuyer.Lib.EventLogs.GetEventLogsForPoAsync(BuyerPoNumber, StartBlock);
+                var logs = await BuyerUILib.EventLogs.GetEventLogsForPoAsync(BuyerPoNumber, StartBlock);
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
 
-                var currentblockHex = await WalletBuyer.Lib.Wallet.Web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
+                var currentblockHex = await BuyerUILib.Wallet.Web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
                 ulong currentBlock = (ulong)(currentblockHex.Value);
 
                 if (logs.Length == 0)
