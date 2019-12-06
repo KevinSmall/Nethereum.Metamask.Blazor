@@ -1,11 +1,14 @@
-﻿using Commerce.Metamask.Blazor.Server.Services;
+﻿using Commerce.Buyer.Lib;
 using Microsoft.AspNetCore.Components;
 using Nethereum.RPC.Eth.DTOs;
 
-namespace Commerce.Metamask.Blazor.Server.Components
+namespace Commerce.Buyer.PoBlazorComponents
 {
     public class TxReceiptBase : ComponentBase
     {
+        [Microsoft.AspNetCore.Components.Parameter]
+        public IBuyerUILib BuyerUILib { get; set; }
+
         [Microsoft.AspNetCore.Components.Parameter]
         public TransactionReceipt Receipt { get; set; }
 
@@ -16,10 +19,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
         public string TransactionReceiptLink { get; private set; }
         public ulong TransactionBlockNumber { get; private set; }
         public bool IsTransactionError { get; private set; }
-
-        [Inject]
-        public IWalletBuyer WalletBuyer { get; set; }
-
+        
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -27,7 +27,7 @@ namespace Commerce.Metamask.Blazor.Server.Components
 
         protected override void OnParametersSet()
         {
-            string blockchainName = this.WalletBuyer.Lib.Wallet.Info.BlockchainName;
+            string blockchainName = this.BuyerUILib.Wallet.Info.BlockchainName;
             TransactionReceiptHash = Receipt?.TransactionHash;
             TransactionReceiptLink = DeriveBaseUrl(blockchainName) + TransactionReceiptHash;
 

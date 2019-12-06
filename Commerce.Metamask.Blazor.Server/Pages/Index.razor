@@ -7,6 +7,10 @@
 @using Commerce.Metamask.Blazor.Server.Components
 @using Commerce.Metamask.Blazor.Server.Services
 @using Microsoft.AspNetCore.Components
+@using Commerce.Buyer.PoBlazorComponents
+
+<MyComponent1 BuyerUILib="@WalletBuyer.Lib">
+</MyComponent1>
 
 <div class="form-group">
     <div class="form-row align-items-center">
@@ -99,7 +103,7 @@
 
                     <div class="form-group">
                         <label for="url">Blockchain Name</label>
-                        <input type="text" class="form-control" readonly id="blockchainName" aria-describedby="blockchainNameHelp" placeholder="None" @bind="@WalletBuyer.Lib.Wallet.Info.BlockchainName" /> 
+                        <input type="text" class="form-control" readonly id="blockchainName" aria-describedby="blockchainNameHelp" placeholder="None" @bind="@WalletBuyer.Lib.Wallet.Info.BlockchainName" />
                         <small id="blockchainNameHelp" class="form-text text-muted">Name of blockchain currently connected to</small>
                     </div>
 

@@ -25,29 +25,20 @@ namespace Commerce.Metamask.Blazor.Server.Services
             _logger = logger;
             _options = options.Value;
             _metamaskInterceptor = metamaskInterceptor;
-        }
 
-        public async Task<ulong> GetLatestBlockNumberAsync()
-        {
-            if (!IsInitialized)
-            {
-                await InitializeAsync();
-            }
-            var blockHex = await _web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
-            return (ulong)blockHex.Value;
+            _web3 = new Web3();
+            Lib = new BuyerUILib(this._web3, _options.WalletBuyerContractAddress);
         }
 
         public async Task InitializeAsync()
         {
             try
             {
-                // Web3
-                _web3 = new Nethereum.Web3.Web3();
+                // Web3                
                 _web3.Client.OverridingRequestInterceptor = _metamaskInterceptor;
 
                 // UI Library
-                // TODO could pass in the _logger ILogger transformed to an ILog here:
-                Lib = new BuyerUILib(this._web3, _options.WalletBuyerContractAddress);
+                // TODO could pass in the _logger ILogger transformed to an ILog here:                
                 await Lib.InitializeAsync();
                 _logger.LogInformation("Created wallet buyer service ok.");
                 IsInitialized = true;

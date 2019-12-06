@@ -8,6 +8,5 @@ namespace Commerce.Metamask.Blazor.Server.Services
         BuyerUILib Lib { get; }
         bool IsInitialized { get; }
         Task InitializeAsync();
-        Task<ulong> GetLatestBlockNumberAsync();
     }
 }

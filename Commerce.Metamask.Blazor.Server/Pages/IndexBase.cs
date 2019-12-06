@@ -24,6 +24,9 @@ namespace Commerce.Metamask.Blazor.Server
             base.OnInitialized();
         }
 
+        /// <summary>
+        /// Init moved to OnAfterRenderAsync so that JavaScript interop works for Metamask service
+        /// </summary>        
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             _renderCounter++;
@@ -36,24 +39,7 @@ namespace Commerce.Metamask.Blazor.Server
                 }             
             }
             await base.OnAfterRenderAsync(firstRender);
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            try
-            {
-                // Init moved to OnAfterRenderAsync so that JavaScript interop works for Metamask service
-            }
-            catch (Exception ex)
-            {
-
-                AdditionalMessage = ex.Message;
-            }
-            finally
-            {
-                await base.OnInitializedAsync();
-            }
-        }
+        }        
 
         public void GeneratePoNumber()
         {

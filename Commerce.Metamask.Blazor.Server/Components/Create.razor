@@ -1,5 +1,6 @@
 ﻿@inherits CreateBase
 @using Microsoft.AspNetCore.Components
+@using Commerce.Buyer.PoBlazorComponents
 
 <div class="card bg-light mb-3">
 
@@ -64,6 +65,7 @@
     </div>
 </div>
 
-<TxReceipt Receipt="@ReceiptForCreateRequest"
+<TxReceipt BuyerUILib="@WalletBuyer.Lib"
+           Receipt="@ReceiptForCreateRequest"
            AdditionalMessage="@AdditionalMessage">
 </TxReceipt>

@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Commerce.Buyer.Lib\Commerce.Buyer.Lib.csproj" />
+    <ProjectReference Include="..\Commerce.Buyer.PoBlazorComponents\Commerce.Buyer.PoBlazorComponents.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,23 @@
+﻿@inherits MyComponent1Base
+@using Microsoft.AspNetCore.Components
+
+<div class="">
+    This Blazor component is defined in the <strong>Commerce.Buyer.PoBlazorComponents</strong> package.
+</div>
+
+<div class="card bg-light mb-3">
+
+    <div class="card-header">Display PO</div>
+    <div class="card-body text-dark">
+
+        <form>
+            <div class="form-group row">
+                <label for="ethPoNumber" class="col-sm-3 col-form-label">Chain name</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" readonly id="ethPoNumber" @bind="@BuyerUILib.Wallet.Info.BlockchainName" />                    
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

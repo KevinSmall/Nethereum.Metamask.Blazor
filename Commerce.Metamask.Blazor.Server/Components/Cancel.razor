@@ -1,5 +1,6 @@
 ﻿@inherits CancelBase
 @using Microsoft.AspNetCore.Components
+@using Commerce.Buyer.PoBlazorComponents
 
 <div class="card bg-light mb-3">
     <div class="card-header">Cancel Existing PO</div>
@@ -23,6 +24,7 @@
     </div>
 </div>
 
-<TxReceipt Receipt="@ReceiptForCancelRequest"
-           AdditionalMessage="@AdditionalMessage">
+<TxReceipt BuyerUILib="@WalletBuyer.Lib"
+            Receipt="@ReceiptForCancelRequest"
+            AdditionalMessage="@AdditionalMessage">
 </TxReceipt>
